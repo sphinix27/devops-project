@@ -35,6 +35,16 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|max:50',
+            'lastname' => 'required|max:50',
+            'birthday' => 'required|date_format:"Y-m-d"',
+            'email' => 'required|email|unique:employees,email',
+            'ci' => 'required|alpha_num|unique:employees,ci',
+            'phone' => 'nullable',
+            'cellphone' => 'nullable',
+            'address' => 'nullable'
+        ]);
         return Employee::create($request->all());
     }
 
@@ -69,6 +79,16 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
+        $request->validate([
+            'name' => 'required|max:50',
+            'lastname' => 'required|max:50',
+            'birthday' => 'required|date_format:"Y-m-d"',
+            'email' => 'required|email',
+            'ci' => 'required|alpha_num',
+            'phone' => 'nullable',
+            'cellphone' => 'nullable',
+            'address' => 'nullable'
+        ]);
         $employee->update($request->all());
         return $employee;
     }
